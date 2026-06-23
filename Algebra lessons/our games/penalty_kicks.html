@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penalty Kick Shootout</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #222;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #fff;
+            overflow: hidden;
+        }
+        h1 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        #scoreboard {
+            display: flex;
+            gap: 40px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+        #game-container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(to bottom, #4caf50 60%, #388e3c 100%);
+            border: 4px solid #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        /* The Soccer Goal */
+        #goal {
+            position: absolute;
+            top: 40px;
+            left: 100px;
+            width: 400px;
+            height: 180px;
+            border: 5px solid #fff;
+            border-bottom: none;
+            background: repeating-linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.1) 10px, transparent 10px, transparent 20px),
+                        repeating-linear-gradient(-45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.1) 10px, transparent 10px, transparent 20px);
+        }
+        /* Goalkeeper */
+        #keeper {
+            position: absolute;
+            bottom: 0;
+            left: 175px;
+            width: 50px;
+            height: 70px;
+            background: #ff5722;
+            border: 3px solid #fff;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.5s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        /* Target Buttons for Shooting */
+        .target {
+            position: absolute;
+            width: 60px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px dashed #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+        .target:hover {
+            background: rgba(255, 255, 255, 0.5);
+            color: #000;
+        }
+        #tl { top: 5px; left: 5px; }
+        #tr { top: 5px; right: 5px; }
+        #bl { bottom: 5px; left: 5px; }
+        #br { bottom: 5px; right: 5px; }
+        /* Soccer Ball */
+        #ball {
+            position: absolute;
+            bottom: 30px;
+            left: 285px;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            border: 2px solid #000;
+            background-image: radial-gradient(circle at 30% 30%, #fff, #ccc);
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 5;
+        }
+        #message {
+            margin-top: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            height: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        #reset-btn {
+            margin-top: 15px;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #2196f3;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: none;
+        }
+        #reset-btn:hover {
+            background: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Penalty Kick Shootout</h1>
+
+    <div id="scoreboard">
+        <div>SCORE: <span id="score-val">0</span></div>
+        <div>ATTEMPTS: <span id="attempts-val">0</span>/5</div>
+    </div>
+
+    <div id="game-container">
+        <!-- Soccer Goal Grid -->
+        <div id="goal">
+            <div class="target" id="tl" onclick="shoot('tl')">TL</div>
+            <div class="target" id="tr" onclick="shoot('tr')">TR</div>
+            <div class="target" id="bl" onclick="shoot('bl')">BL</div>
+            <div class="target" id="br" onclick="shoot('br')">BR</div>
+            
+            <!-- Goalkeeper element inside the goal wrapper -->
+            <div id="keeper">GK</div>
+        </div>
+
+        <!-- Soccer Ball -->
+        <div id="ball"></div>
+    </div>
+
+    <div id="message">Click a target (TL, TR, BL, BR) to shoot!</div>
+    <button id="reset-btn" onclick="resetGame()">Play Again</button>
+
+    <script>
+        let score = 0;
+        let attempts = 0;
+        let isAnimating = false;
+
+        // Visual coordinates mapping for the ball and keeper positions
+        const positions = {
+            tl: { ballTop: "50px", ballLeft: "120px", gkTop: "35px", gkLeft: "110px" },
+            tr: { ballTop: "50px", ballLeft: "450px", gkTop: "35px", gkLeft: "240px" },
+            bl: { ballTop: "150px", ballLeft: "120px", gkTop: "90px", gkLeft: "110px" },
+            br: { ballTop: "150px", ballLeft: "450px", gkTop: "90px", gkLeft: "240px" }
+        };
+
+        const ball = document.getElementById('ball');
+        const keeper = document.getElementById('keeper');
+        const scoreDisplay = document.getElementById('score-val');
+        const attemptsDisplay = document.getElementById('attempts-val');
+        const messageDisplay = document.getElementById('message');
+        const resetBtn = document.getElementById('reset-btn');
+
+        function shoot(playerChoice) {
+            if (isAnimating || attempts >= 5) return;
+            isAnimating = true;
+
+            attempts++;
+            attemptsDisplay.innerText = attempts;
+
+            // Goalkeeper picks a random target corner to defend
+            const options = ['tl', 'tr', 'bl', 'br'];
+            const keeperChoice = options[Math.floor(Math.random() * options.length)];
+
+            // Animate Goalkeeper diving
+            keeper.style.top = positions[keeperChoice].gkTop;
+            keeper.style.left = positions[keeperChoice].gkLeft;
+
+            // Animate Ball travel & scale down to simulate depth
+            ball.style.top = positions[playerChoice].ballTop;
+            ball.style.left = positions[playerChoice].ballLeft;
+            ball.style.transform = "scale(0.5) rotate(720deg)";
+
+            // Check system outcome after animation finishes
+            setTimeout(() => {
+                if (playerChoice === keeperChoice) {
+                    messageDisplay.innerText = "SAVED! The keeper blocked it!";
+                    messageDisplay.style.color = "#ff5722";
+                } else {
+                    score++;
+                    scoreDisplay.innerText = score;
+                    messageDisplay.innerText = "GOAL!! Brilliant strike!";
+                    messageDisplay.style.color = "#4caf50";
+                }
+
+                // Prepare next shot or trigger game over sequence
+                setTimeout(() => {
+                    if (attempts < 5) {
+                        resetPositions();
+                    } else {
+                        endGame();
+                    }
+                }, 1500);
+
+            }, 600);
+        }
+
+        function resetPositions() {
+            // Restore ball and GK back to baseline layout
+            ball.style.top = "330px";
+            ball.style.left = "285px";
+            ball.style.transform = "scale(1) rotate(0deg)";
+            
+            keeper.style.top = "90px";
+            keeper.style.left = "175px";
+            
+            messageDisplay.innerText = "Take your next shot!";
+            messageDisplay.style.color = "#fff";
+            isAnimating = false;
+        }
+
+        function endGame() {
+            if (score >= 3) {
+                messageDisplay.innerText = `Game Over! You Win! Final Score: ${score}/5`;
+                messageDisplay.style.color = "#4caf50";
+            } else {
+                messageDisplay.innerText = `Game Over! You Lose! Final Score: ${score}/5`;
+                messageDisplay.style.color = "#f44336";
+            }
+            resetBtn.style.display = "block";
+        }
+
+        function resetGame() {
+            score = 0;
+            attempts = 0;
+            scoreDisplay.innerText = score;
+            attemptsDisplay.innerText = attempts;
+            resetBtn.style.display = "none";
+            resetPositions();
+        }
+    </script>
+</body>
+</html>
