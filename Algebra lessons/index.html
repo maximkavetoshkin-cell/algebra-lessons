@@ -89,8 +89,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 40px 30px 50px 30px;
+    align-items: flex-start;
+    padding: 40px 30px 50px 60px;
   }
 
   /* ========== BUTTON GRID ========== */
@@ -98,15 +98,13 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 30px;
-    width: 100%;
-    max-width: 1200px;
+    width: min(100%, 1200px);
+    align-self: flex-start;
   }
 
   /* ========== GAME BUTTONS ========== */
   .btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: relative;
     width: 100%;
     min-height: 220px;
     padding: 0;
@@ -133,25 +131,29 @@
     width: 100%;
     height: auto;
     object-fit: contain;
-    object-fit: contain; /* shows the whole image */
-    object-fit: cover;
     display: block;
-    border-bottom: 2px solid #FF10F0;
     pointer-events: none;
     transition: transform 0.35s ease;
   }
 
-  /* Label below image */
+  /* Label overlay on image */
   .btn span {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
-    width: 100%;
-    padding: 12px 8px;
-    font-size: clamp(12px, 1.4vw, 16px);
+    font-size: 16px;
     letter-spacing: 0.6px;
+    background: rgba(0, 0, 0, 0.85);
     pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .btn:hover {
@@ -311,7 +313,7 @@
 
     <button class="btn"
       onclick="loadGame('https://textfree.us/')">
-      <img src="https://www.google.com/s2/favicons?sz=128&domain=textfree.us" alt="TextFree">
+      <img src="photos_algebra_lessons/text free logo.png" alt="TextFree">
       <span>TextFree</span>
     </button>
 
@@ -335,13 +337,13 @@
 
     <button class="btn"
       onclick="loadGame('https://www.mathgames.com/arcade')">
-      <img src="https://www.google.com/s2/favicons?sz=128&domain=mathgames.com" alt="MathGames Arcade">
+      <img src="photos_algebra_lessons/math games.png" alt="MathGames Arcade">
       <span>MathGames Arcade</span>
     </button>
 
     <button class="btn"
       onclick="loadGame('https://math3.lol/')">
-      <img src="photos_algebra_lessons/mathlol.png" alt="MathLol">
+      <img src="photos_algebra_lessons/math lol.png" alt="MathLol">
       <span>MathLol</span>
     </button>
 
@@ -349,6 +351,11 @@
       onclick="loadGame('https://www.calculators.org/games/archery/')">
       <img src="photos_algebra_lessons/archery picture.jpg" alt="Archery">
       <span>Archery</span>
+    </button>
+    <button class="btn"
+      onclick="loadGame('https://omogglegame.com/')">
+      <img src="photos_algebra_lessons/omoggle.jpg" alt="omoggle">
+      <span>Omoggle</span>
     </button>
 
   </div>

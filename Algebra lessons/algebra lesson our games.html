@@ -98,14 +98,15 @@
     gap: 30px;
     width: 100%;
     max-width: 1200px;
+    justify-items: center;
   }
 
   /* ========== GAME BUTTONS ========== */
   .btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: relative;
     width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
     min-height: 220px;
     padding: 0;
     font-weight: bold;
@@ -131,25 +132,29 @@
     width: 100%;
     height: auto;
     object-fit: contain;
-    object-fit: contain; /* shows the whole image */
-    object-fit: cover;
     display: block;
-    border-bottom: 2px solid #FF10F0;
     pointer-events: none;
     transition: transform 0.35s ease;
   }
 
-  /* Label below image */
+  /* Label overlay on image */
   .btn span {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
-    width: 100%;
-    padding: 12px 8px;
-    font-size: clamp(12px, 1.4vw, 16px);
+    font-size: 16px;
     letter-spacing: 0.6px;
+    background: rgba(0, 0, 0, 0.75);
     pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .btn:hover {
@@ -283,15 +288,15 @@
       <span>Cookie Clicker</span>
     </button>
 
-
-  </div>
-    <div class="btn-grid">
-
     <button class="btn"
       onclick="loadGame('our games/penalty_kicks.html')">
       <img src="photos_algebra_lessons/penalty_kicks.jpg" alt="penalty kicks">
       <span>Penalty Kicks</span>
     </button>
+
+  </div>
+    <div class="btn-grid">
+
 
 
   </div>
