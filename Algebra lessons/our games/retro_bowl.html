@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Retro Bowl</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #28282B;
+      font-family: Verdana, sans-serif;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      box-sizing: border-box;
+      padding: 8px;
+    }
+    .retro-bowl-table {
+      width: 100%;
+      max-width: 968px;
+      margin: 0;
+      background: #28282B;
+      border: 1px solid #28282B;
+      border-collapse: collapse;
+    }
+    .retro-bowl-table td {
+      padding: 5px;
+      font-size: 11px;
+      color: #000;
+    }
+    .retro-bowl-wrap {
+      width: 100%;
+      max-width: 968px;
+      margin: 0 auto;
+      aspect-ratio: 968 / 561;
+      overflow: hidden;
+      background: #28282B;
+      border: 1px solid #28282B;
+    }
+    .retro-bowl-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000;
+    }
+    .retro-bowl-footer {
+      padding: 5px 10px;
+      border-top: 1px solid #F3F3F3;
+      text-align: center;
+    }
+    @media (max-width: 700px) {
+      body {
+        padding: 4px;
+      }
+      .retro-bowl-wrap {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <table class="retro-bowl-table" cellspacing="0" cellpadding="0">
+    <tr>
+      <td>
+        <div class="retro-bowl-wrap">
+          <iframe allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" src="https://game316009.konggames.com/gamez/0031/6009/live/index.html" frameborder="0" scrolling="no"></iframe>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="retro-bowl-footer">
+        <strong><a href="https://m.gamesflow.com/?play=10018114" target="_blank">Retro bowl</a></strong> | <a href="" title="retro bowl" target="_blank"></a>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
