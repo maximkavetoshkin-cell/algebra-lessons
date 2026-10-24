@@ -5,8 +5,8 @@ on:
       - new-features
 
 jobs:
-web-deploy:
-  name: Deploy 
+  web-deploy:
+    name: Deploy 
     runs-on: ubuntu-latest
     steps:
       - name: Get latest code
