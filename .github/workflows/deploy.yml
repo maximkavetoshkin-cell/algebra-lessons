@@ -18,5 +18,5 @@ jobs:
           server: ftpupload.net
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: "./Algebra lessons"
+          local-dir: "./Algebra lessons/"
           server-dir: "./htdocs/"
