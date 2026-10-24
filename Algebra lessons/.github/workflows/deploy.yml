@@ -18,5 +18,5 @@ web-deploy:
           server: ftpupload.net
           username: ${{ secret.FTP_USERNAME }}
           password: ${{ secret.FTP_PASSWORD }}
-          local-dir: "./Algebra lessons/"
+          local-dir: "./"
           server-dir: "./htdocs/"
