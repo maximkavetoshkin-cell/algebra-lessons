@@ -115,18 +115,19 @@
         </form>
     </div>
 
-</body>
 <script>
     document.getElementById("requestForm").addEventListener("submit", function(event) {
         // 1. Let the browser send the data to Formspree in the background
         
         // 2. Pop up a quick alert window immediately
-        alert("Thanks for submitting! Bringing you back to the arcade...");
+        alert("Thanks for submitting! Bringing you back to the main page...");
         
         // 3. Wait 3 seconds, then drop back to the main homepage
         setTimeout(function() {
             window.top.location.href = "index.html";
         }, 3000);
-    </script>
-
+    });
+</script>
+</body>
 </html>
+
