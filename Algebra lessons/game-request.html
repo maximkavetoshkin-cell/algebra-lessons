@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a Game</title>
+    <style>
+        body {
+    background-color: #0f0f0f;
+    margin: 0;
+    padding: 20px;
+}
+
+.request-form-container {
+    background-color: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 25px;
+    max-width: 500px;
+    margin: 20px auto;
+    font-family: sans-serif;
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.request-form-container h2 {
+    margin-top: 0;
+    color: #4caf50;
+    text-align: center;
+}
+
+.request-form-container p {
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    background-color: #2a2a2a;
+    color: #fff;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.form-group textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: #4caf50;
+    outline: none;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: #4caf50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="request-form-container">
+        <h2>Request a Game! 🎮</h2>
+        <p>Let me know what game you want to see added next to our arcade.</p>
+        
+        <form action="https://formspree.io" method="POST" class="game-request-form">
+            <div class="form-group">
+                <label for="username">Your Name / Nickname:</label>
+                <input type="text" id="username" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gametitle">Game Title:</label>
+                <input type="text" id="gametitle" name="requested_game" placeholder="e.g., Tetris, Retro Bowl" required>
+            </div>
+
+            <div class="form-group">
+                <label for="details">Additional Details (Optional):</label>
+                <textarea id="details" name="message" placeholder="Any specific version or unblocked link?"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Request</button>
+        </form>
+    </div>
+</body>
+</html>
