@@ -1,133 +1,418 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request a Game</title>
+
+    <title>Request a Game | Algebra Lesson</title>
+
     <style>
         body {
-    background-color: #0f0f0f;
-    margin: 0;
-    padding: 20px;
-}
+            background-color: #0f0f0f;
+            margin: 0;
+            padding: 20px;
+            font-family: sans-serif;
+        }
 
-.request-form-container {
-    background-color: #1a1a1a;
-    border: 2px solid #333;
-    border-radius: 12px;
-    padding: 25px;
-    max-width: 500px;
-    margin: 20px auto;
-    font-family: sans-serif;
-    color: #fff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-}
+        .request-form-container {
+            background-color: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 500px;
+            margin: 20px auto;
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
 
-.request-form-container h2 {
-    margin-top: 0;
-    color: #ba73e0;
-    text-align: center;
-}
+        .request-form-container h2 {
+            margin-top: 0;
+            color: #1313ee;
+            text-align: center;
+        }
 
-.request-form-container p {
-    text-align: center;
-    color: #aaa;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
+        .request-form-container p {
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
 
-.form-group {
-    margin-bottom: 15px;
-}
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 14px;
-}
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
 
-.form-group input, 
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #444;
-    background-color: #2a2a2a;
-    color: #fff;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 15px;
-}
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: #fff;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
 
-.form-group textarea {
-    height: 80px;
-    resize: vertical;
-}
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #a516f1;
+            outline: none;
+        }
 
-.form-group input:focus, 
-.form-group textarea:focus {
-    border-color: #a516f1;
-    outline: none;
-}
+        .form-group textarea {
+            height: 80px;
+            resize: vertical;
+        }
 
-.submit-btn {
-    width: 100%;
-    background-color: #a516f1;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
+        .submit-btn {
+            width: 100%;
+            background-color: #a516f1;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
 
-.submit-btn:hover {
-    background-color: #a516f1;
-}
+        .submit-btn:hover {
+            background-color: #850fc5;
+        }
 
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
+        /* Large popup background */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.82);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 9999;
+        }
+
+        .popup-overlay[hidden] {
+            display: none;
+        }
+
+        /* Popup window */
+        .popup-box {
+            width: 100%;
+            max-width: 420px;
+            box-sizing: border-box;
+            padding: 35px 25px;
+            text-align: center;
+            color: white;
+            background: #1a1a1a;
+            border: 2px solid #a516f1;
+            border-radius: 18px;
+            box-shadow: 0 0 35px rgba(165, 22, 241, 0.35);
+            animation: popupAppear 0.25s ease-out;
+        }
+
+        .success-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #322044;
+            color: #d9a4ff;
+            font-size: 42px;
+            line-height: 65px;
+        }
+
+        .popup-box h2 {
+            color: #d9a4ff;
+            font-size: 27px;
+            margin: 0 0 15px;
+        }
+
+        .popup-box p {
+            color: #ded5e7;
+            line-height: 1.5;
+        }
+
+        .popup-box .popup-small {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .popup-message {
+            background: #a516f1;
+            border-radius: 8px;
+            padding: 13px;
+            margin-top: 22px;
+            font-size: 14px;
+        }
+
+        /* Error popup */
+        .error-box {
+            border-color: #e05252;
+            box-shadow: 0 0 30px rgba(224, 82, 82, 0.2);
+        }
+
+        .error-box h2 {
+            color: #ff7777;
+        }
+
+        .error-box .success-icon {
+            color: #ff7777;
+            background: #402222;
+        }
+
+        .error-box .popup-message {
+            background: #632929;
+        }
+
+        .retry-btn {
+            margin-top: 15px;
+            padding: 10px 22px;
+            color: white;
+            background: #a516f1;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        @keyframes popupAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .request-form-container {
+                padding: 20px;
+            }
+
+            .popup-box {
+                padding: 28px 20px;
+            }
+
+            .popup-box h2 {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
+
 <body>
+
     <div class="request-form-container">
-        <h2>Request a Game! </h2>
+        <h2>Request a Game!</h2>
+
         <p>Let me know what game you want to see added next.</p>
-        
-        <form action="https://formspree.io/f/xyeekyag" method="POST" class="game-request-form">
+
+        <form
+            id="requestForm"
+            action="https://formspree.io/f/xyeekyag"
+            method="POST"
+        >
             <div class="form-group">
                 <label for="username">Your Name / Nickname:</label>
-                <input type="text" id="username" name="name" placeholder="Enter your name" required>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="name"
+                    placeholder="Enter your name"
+                    maxlength="100"
+                    required
+                >
             </div>
 
             <div class="form-group">
                 <label for="gametitle">Game Title:</label>
-                <input type="text" id="gametitle" name="requested_game" placeholder="e.g., Tetris, Retro Bowl" required>
+
+                <input
+                    type="text"
+                    id="gametitle"
+                    name="requested_game"
+                    placeholder="e.g., Tetris, Retro Bowl"
+                    maxlength="150"
+                    required
+                >
             </div>
 
             <div class="form-group">
-                <label for="details">Additional Details (Optional):</label>
-                <textarea id="details" name="message" placeholder="Any specific version or unblocked link?"></textarea>
+                <label for="details">
+                    Additional Details (Optional):
+                </label>
+
+                <textarea
+                    id="details"
+                    name="message"
+                    placeholder="Any specific version or unblocked link?"
+                    maxlength="2000"
+                ></textarea>
             </div>
 
-            <button type="submit" class="submit-btn">Submit Request</button>
+            <button type="submit" class="submit-btn">
+                Submit Request
+            </button>
         </form>
     </div>
 
-<script>
-    document.getElementById("requestForm").addEventListener("submit", function(event) {
-        // 1. Let the browser send the data to Formspree in the background
-        
-        // 2. Pop up a quick alert window immediately
-        alert("Thanks for submitting! Bringing you back to the main page...");
-        
-        // 3. Wait 3 seconds, then drop back to the main homepage
-        setTimeout(function() {
-            window.top.location.href = "index.html";
-        }, 3000);
-    });
-</script>
+    <!-- Large success/error popup -->
+    <div
+        id="successPopup"
+        class="popup-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="popupTitle"
+        hidden
+    >
+        <div class="popup-box" id="popupBox">
+            <div class="success-icon" id="popupIcon">✓</div>
+
+            <h2 id="popupTitle">Request Submitted!</h2>
+
+            <p id="popupDescription">
+                Thanks for helping improve Algebra Lesson!
+            </p>
+
+            <p class="popup-small" id="popupSmall">
+                Your game request has been sent successfully.
+            </p>
+
+            <div class="popup-message" id="popupMessage">
+                Returning to homepage in 3 seconds...
+            </div>
+
+            <button
+                type="button"
+                id="retryButton"
+                class="retry-btn"
+                hidden
+            >
+                Try Again
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("requestForm");
+        const submitButton = form.querySelector(
+            'button[type="submit"]'
+        );
+
+        const popup = document.getElementById("successPopup");
+        const popupBox = document.getElementById("popupBox");
+        const popupIcon = document.getElementById("popupIcon");
+        const popupTitle = document.getElementById("popupTitle");
+        const popupDescription =
+            document.getElementById("popupDescription");
+        const popupSmall = document.getElementById("popupSmall");
+        const popupMessage = document.getElementById("popupMessage");
+        const retryButton = document.getElementById("retryButton");
+
+        function showError(message) {
+            popupBox.classList.add("error-box");
+            popupIcon.textContent = "!";
+            popupTitle.textContent = "Submission Failed";
+            popupDescription.textContent = message;
+            popupSmall.textContent =
+                "Your request may not have been received.";
+            popupMessage.textContent =
+                "Please check your connection and try again.";
+
+            retryButton.hidden = false;
+            popup.hidden = false;
+
+            submitButton.disabled = false;
+        }
+
+        retryButton.addEventListener("click", function () {
+            popup.hidden = true;
+            popupBox.classList.remove("error-box");
+            form.querySelector('input[name="requested_game"]').focus();
+        });
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            if (submitButton.disabled) {
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Submitting...";
+
+            try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    body: new FormData(form),
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    showError(
+                        "Formspree could not accept your request. " +
+                        "Please try again."
+                    );
+                    return;
+                }
+
+                // Show the large success popup.
+                popupBox.classList.remove("error-box");
+                popupIcon.textContent = "✓";
+                popupTitle.textContent = "Request Submitted!";
+                popupDescription.textContent =
+                    "Thanks for helping improve Algebra Lesson!";
+                popupSmall.textContent =
+                    "Your game request has been sent successfully.";
+                popupMessage.textContent =
+                    "Returning to homepage in 3 seconds...";
+                retryButton.hidden = true;
+                popup.hidden = false;
+
+                // Clear the submitted fields.
+                form.reset();
+
+                // Redirect only after a successful submission.
+                setTimeout(function () {
+                    window.location.href = "index.html";
+                }, 3000);
+
+            } catch (error) {
+                showError(
+                    "A connection error occurred. " +
+                    "Please check your internet and try again."
+                );
+            } finally {
+                submitButton.textContent = "Submit Request";
+
+                if (popupBox.classList.contains("error-box")) {
+                    submitButton.disabled = false;
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
-
