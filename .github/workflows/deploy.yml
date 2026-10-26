@@ -20,4 +20,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: "./Algebra lessons/"
           server-dir: "./htdocs/"
-          dangerous-clean-slate: true
+         
